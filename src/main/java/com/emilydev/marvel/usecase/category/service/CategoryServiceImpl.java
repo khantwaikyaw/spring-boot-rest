@@ -1,15 +1,17 @@
 package com.emilydev.marvel.usecase.category.service;
 
 import com.emilydev.marvel.domain.category.entity.Category;
-import com.emilydev.marvel.domain.category.entity.dto.CategoryRequestDto;
-import com.emilydev.marvel.domain.category.entity.dto.CategoryResponseDto;
 import com.emilydev.marvel.domain.category.service.CategoryService;
-import com.emilydev.marvel.usecase.category.mapper.CategoryMapper;
 import com.emilydev.marvel.usecase.category.repository.CategoryRepository;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
+
+import java.util.Collection;
+import java.util.List;
+import java.util.Optional;
+import java.util.UUID;
 
 @Service
 @Transactional
@@ -19,6 +21,21 @@ public class CategoryServiceImpl implements CategoryService {
 
     private final CategoryRepository repo;
 
+    @Override
+    public Category create(Category category) {
+        return repo.save(category);
+    }
+
+    @Override
+    public Collection<Category> findAll() {
+        return List.copyOf(repo.findAll());
+    }
+
+    @Override
+    public Optional<Category> findOne(UUID id) {
+        return Optional.ofNullable(repo.findById(id).orElseThrow(() -> new IllegalArgumentException("Category not found")));
+    }
+
 //    CategoryMapper mapper = new CategoryMapper();
 
 //    @Autowired
@@ -27,12 +44,12 @@ public class CategoryServiceImpl implements CategoryService {
 //    private final CategoryMapper mapper;
 //    private final CategoryMapper mapper = CategoryMapper.INSTANCE;
 
-    @Override
-    public CategoryResponseDto create(CategoryRequestDto requestDto) {
-        Category categoryEntity = CategoryMapper.toEntity(requestDto);
-        Category savedCategory = repo.save(categoryEntity);
-        log.info("Created category: {}", savedCategory);
-
-        return CategoryMapper.toResponseDto(savedCategory);
-    }
+//    @Override
+//    public CategoryResponseDto create(CategoryRequestDto requestDto) {
+//        Category categoryEntity = CategoryMapper.toEntity(requestDto);
+//        Category savedCategory = repo.save(categoryEntity);
+//        log.info("Created category: {}", savedCategory);
+//
+//        return CategoryMapper.toResponseDto(savedCategory);
+//    }
 }
