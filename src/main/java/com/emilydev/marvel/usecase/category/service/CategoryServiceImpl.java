@@ -1,10 +1,10 @@
 package com.emilydev.marvel.usecase.category.service;
 
 import com.emilydev.marvel.domain.category.entity.Category;
-import com.emilydev.marvel.domain.category.entity.dto.CategoryMapper;
 import com.emilydev.marvel.domain.category.entity.dto.CategoryRequestDto;
 import com.emilydev.marvel.domain.category.entity.dto.CategoryResponseDto;
 import com.emilydev.marvel.domain.category.service.CategoryService;
+import com.emilydev.marvel.usecase.category.mapper.CategoryMapper;
 import com.emilydev.marvel.usecase.category.repository.CategoryRepository;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
@@ -19,15 +19,20 @@ public class CategoryServiceImpl implements CategoryService {
 
     private final CategoryRepository repo;
 
-    private final CategoryMapper mapper;
+//    CategoryMapper mapper = new CategoryMapper();
+
+//    @Autowired
+//    private final CategoryMapper mapper;
+
+//    private final CategoryMapper mapper;
 //    private final CategoryMapper mapper = CategoryMapper.INSTANCE;
 
     @Override
     public CategoryResponseDto create(CategoryRequestDto requestDto) {
-        Category category = mapper.toEntity(requestDto);
-        Category savedCategory = repo.save(category);
-        log.info("Created category: {}", category);
+        Category categoryEntity = CategoryMapper.toEntity(requestDto);
+        Category savedCategory = repo.save(categoryEntity);
+        log.info("Created category: {}", savedCategory);
 
-        return mapper.toResponseDto(savedCategory);
+        return CategoryMapper.toResponseDto(savedCategory);
     }
 }
