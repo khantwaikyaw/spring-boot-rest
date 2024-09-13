@@ -1,18 +1,14 @@
 package com.emilydev.marvel.domain.category.entity;
 
+import com.emilydev.marvel.core.model.AbstractAuditableModel;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import lombok.experimental.FieldDefaults;
-import org.hibernate.annotations.CreationTimestamp;
-import org.hibernate.annotations.UpdateTimestamp;
 
-import java.util.Date;
 import java.util.UUID;
 
 
+@EqualsAndHashCode(callSuper = true)
 @Entity
 @NoArgsConstructor
 @AllArgsConstructor
@@ -20,7 +16,7 @@ import java.util.UUID;
 @Builder
 @FieldDefaults(level = lombok.AccessLevel.PRIVATE)
 @Table(name = "categories")
-public class Category {
+public class Category extends AbstractAuditableModel {
 
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
@@ -28,13 +24,4 @@ public class Category {
     UUID id;
     String name;
     String description;
-
-    @CreationTimestamp
-    @Column(name = "created_at", nullable = false, updatable = false)
-    Date createdAt;
-
-    @UpdateTimestamp
-    @Column(name = "updated_at")
-    Date updatedAt;
-
 }
