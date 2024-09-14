@@ -13,4 +13,6 @@ public interface CategoryService extends ServiceInterface<Category> {
     Collection<Category> findAll();
 
     Optional<Category> findOne(UUID id);
+
+    Category update(Category category);
 }
