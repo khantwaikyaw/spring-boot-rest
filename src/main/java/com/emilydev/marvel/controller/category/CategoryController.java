@@ -1,5 +1,6 @@
 package com.emilydev.marvel.controller.category;
 
+import com.emilydev.marvel.domain.category.entity.Category;
 import com.emilydev.marvel.domain.category.entity.dto.CategoryRequestDto;
 import com.emilydev.marvel.domain.category.entity.dto.CategoryResponseDto;
 import com.emilydev.marvel.usecase.category.CategoryUseCase;
@@ -38,6 +39,19 @@ public class CategoryController {
     private ResponseEntity<Optional<CategoryResponseDto>> findOne(@PathVariable("id") UUID id) {
         Optional<CategoryResponseDto> category = useCase.findOne(id);
         return ResponseEntity.status(HttpStatus.OK).body(category);
+    }
+
+    @PutMapping("/{id}")
+    @ResponseStatus(HttpStatus.ACCEPTED)
+    private ResponseEntity<CategoryResponseDto> update(@RequestBody Category req, @PathVariable("id") UUID id) {
+        CategoryResponseDto categoryDto = useCase.update(id, req);
+        return ResponseEntity.status(HttpStatus.OK).body(categoryDto);
+    }
+
+    @DeleteMapping("/{id}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    private void delete(@PathVariable("id") UUID id) {
+        useCase.delete(id);
     }
 
 }
