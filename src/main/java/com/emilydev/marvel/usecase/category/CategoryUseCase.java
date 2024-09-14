@@ -1,6 +1,7 @@
 package com.emilydev.marvel.usecase.category;
 
 import com.emilydev.marvel.core.exception.BadRequestException;
+import com.emilydev.marvel.core.exception.NotFoundException;
 import com.emilydev.marvel.domain.category.entity.Category;
 import com.emilydev.marvel.domain.category.entity.dto.CategoryRequestDto;
 import com.emilydev.marvel.domain.category.entity.dto.CategoryResponseDto;
@@ -32,5 +33,28 @@ public class CategoryUseCase {
     public Optional<CategoryResponseDto> findOne(UUID id) {
         Optional<Category> category = serviceImpl.findOne(id);
         return category.map(CategoryMapper::toResponseDto);
+    }
+
+    public CategoryResponseDto update(UUID id, Category req) throws BadRequestException {
+        Optional<Category> existingCategory = Optional.ofNullable(
+                serviceImpl.findOne(id).orElseThrow(
+                        () -> new NotFoundException("Category not found")
+                ));
+
+        if (existingCategory.isPresent()) {
+            Category category = existingCategory.get();
+            category.setName(req.getName());
+            category.setDescription(req.getDescription());
+            return CategoryMapper.toResponseDto(serviceImpl.update(category));
+        }
+        throw new BadRequestException("Category not found");
+    }
+
+    public void delete(UUID id) {
+        Boolean exists = serviceImpl.isExist(id);
+        if (!exists) {
+            throw new NotFoundException("Category not found");
+        }
+        serviceImpl.delete(id);
     }
 }

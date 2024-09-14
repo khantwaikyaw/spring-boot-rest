@@ -36,20 +36,18 @@ public class CategoryServiceImpl implements CategoryService {
         return Optional.ofNullable(repo.findById(id).orElseThrow(() -> new IllegalArgumentException("Category not found")));
     }
 
-//    CategoryMapper mapper = new CategoryMapper();
+    @Override
+    public Category update(Category category) {
+        return repo.save(category);
+    }
 
-//    @Autowired
-//    private final CategoryMapper mapper;
+    @Override
+    public void delete(UUID id) {
+        repo.deleteById(id);
+    }
 
-//    private final CategoryMapper mapper;
-//    private final CategoryMapper mapper = CategoryMapper.INSTANCE;
-
-//    @Override
-//    public CategoryResponseDto create(CategoryRequestDto requestDto) {
-//        Category categoryEntity = CategoryMapper.toEntity(requestDto);
-//        Category savedCategory = repo.save(categoryEntity);
-//        log.info("Created category: {}", savedCategory);
-//
-//        return CategoryMapper.toResponseDto(savedCategory);
-//    }
+    @Override
+    public Boolean isExist(UUID id) {
+        return repo.existsById(id);
+    }
 }
