@@ -15,4 +15,8 @@ public interface CategoryService extends ServiceInterface<Category> {
     Optional<Category> findOne(UUID id);
 
     Category update(Category category);
+
+    void delete(UUID id);
+
+    Boolean isExist(UUID id);
 }

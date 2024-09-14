@@ -14,4 +14,8 @@ public interface ServiceInterface<T extends AbstractAuditableModel> {
     Optional<T> findOne(UUID id);
 
     T update(T entity) throws Exception;
+
+    void delete(UUID id);
+
+    Boolean isExist(UUID id);
 }

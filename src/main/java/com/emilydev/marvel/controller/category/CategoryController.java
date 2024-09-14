@@ -42,10 +42,16 @@ public class CategoryController {
     }
 
     @PutMapping("/{id}")
-    @ResponseStatus(HttpStatus.NO_CONTENT)
+    @ResponseStatus(HttpStatus.ACCEPTED)
     private ResponseEntity<CategoryResponseDto> update(@RequestBody Category req, @PathVariable("id") UUID id) {
         CategoryResponseDto categoryDto = useCase.update(id, req);
         return ResponseEntity.status(HttpStatus.OK).body(categoryDto);
+    }
+
+    @DeleteMapping("/{id}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    private void delete(@PathVariable("id") UUID id) {
+        useCase.delete(id);
     }
 
 }
