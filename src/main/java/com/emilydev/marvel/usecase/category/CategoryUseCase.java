@@ -49,4 +49,12 @@ public class CategoryUseCase {
         }
         throw new BadRequestException("Category not found");
     }
+
+    public void delete(UUID id) {
+        Boolean exists = serviceImpl.isExist(id);
+        if (!exists) {
+            throw new NotFoundException("Category not found");
+        }
+        serviceImpl.delete(id);
+    }
 }

@@ -40,4 +40,14 @@ public class CategoryServiceImpl implements CategoryService {
     public Category update(Category category) {
         return repo.save(category);
     }
+
+    @Override
+    public void delete(UUID id) {
+        repo.deleteById(id);
+    }
+
+    @Override
+    public Boolean isExist(UUID id) {
+        return repo.existsById(id);
+    }
 }
