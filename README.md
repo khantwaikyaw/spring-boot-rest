@@ -56,7 +56,11 @@ Default database credentials
 - Data Validation
 - Mutable and Immutable Models
 - Mutable and Immutable Services
+- Relationships
+- Swagger Documentation
+- Environment Variables
 - Security
+- Docker
 - Unit Testing
 - Integration Testing
 
